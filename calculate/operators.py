@@ -64,10 +64,7 @@ class Operators:
         """
         if self._is_symbol_valid():
             self.numbers = self.operation.split(self.signe[0])
-            for number in self.numbers:
-                if not self._is_float(number):
-                    return False
-            return True
+            return all(self._is_float(number) for number in self.numbers)
         return False
 
     def _is_symbol_valid(self):
@@ -77,10 +74,7 @@ class Operators:
             :return: True if all symbol in the operation is valid.
         """
         symbols = [symbol for symbol in self.operation if not symbol.isdigit()]
-        for symbol in symbols:
-            if symbol != self.signe and symbol != "." and symbol != " ":
-                return False
-        return True
+        return all(symbol in [self.signe, ".", " "] for symbol in symbols)
 
     def _is_float(self, value):
         """
